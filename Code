@@ -1,0 +1,25 @@
+const fetch = require('node-fetch');
+
+const API_KEY = 'YOUR_API_KEY';
+const url = 'https://api.commerce.coinbase.com/charges';
+
+const createCharge = async () => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CC-Api-Key': API_KEY,
+    },
+    body: JSON.stringify({
+      name: 'Product Name',
+      description: 'Product Description',
+      pricing_type: 'fixed_price',
+      local_price: { amount: '10.00', currency: 'USD' },
+      redirect_url: 'https://your-website.com/thank-you',
+      cancel_url: 'https://your-website.com/cancel',
+    }),
+  });
+
+  const data = await response.json();
+  return data.data;
+};
